@@ -15,5 +15,5 @@
  *
  */
 
-include ':app'
-include ':attribution-sdk'
+include ':app', ':radattribution-sdk-android'
+project(':radattribution-sdk-android').projectDir = new File('radattribution-sdk-android/radattribution-sdk-android')

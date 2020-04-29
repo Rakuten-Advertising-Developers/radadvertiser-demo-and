@@ -1,0 +1,4 @@
+[submodule "radattribution-sdk-android"]
+	path = radattribution-sdk-android
+	url = git@github.com:Rakuten-Advertising-Developers/radadvertiser-demo-android.git
+	branch = develop

@@ -18,10 +18,8 @@
 package com.example.android.radadvertiserdemo
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.ads.identifier.AdvertisingIdClient
-import com.rakutenadvertising.attribution_sdk.RAdAttribution
+import com.rakuten.attribution.sdk.RAdAttribution
 
 class MainActivity : AppCompatActivity() {
 

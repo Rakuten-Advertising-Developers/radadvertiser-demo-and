@@ -25,7 +25,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.android.radadvertiserdemo.R
 import com.example.android.radadvertiserdemo.network.Product
-import com.rakutenadvertising.attribution_sdk.RAdAttribution
+import com.rakuten.attribution.sdk.RAdAttribution
 
 /**
  *  The [ViewModel] associated with the [DetailFragment], containing information about the selected
@@ -70,6 +70,5 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
         Log.i("atttibution SDK", "clicked")
 
         RAdAttribution( _context).sendPurchaseEvent()
-
     }
 }
