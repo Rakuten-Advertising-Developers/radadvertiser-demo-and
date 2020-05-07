@@ -39,8 +39,6 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
     private val _context = app.applicationContext
     private val _selectedProduct = MutableLiveData<Product>()
 
-
-
     // The external LiveData for the SelectedProperty
     val selectedProduct: LiveData<Product>
         get() = _selectedProduct
@@ -88,6 +86,7 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
                 privateKey = secretKey,
                 isManualAppLaunch = false
         )
+
         val attribution = RAdAttribution(_context, configuration)
         attribution.eventSender.sendEvent("ADD_TO_CART") { result ->
             when (result) {

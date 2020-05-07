@@ -102,4 +102,5 @@ dependencies {
 
     implementation project(path: ':radattribution-sdk-android')
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }

@@ -18,12 +18,7 @@
 package com.example.android.radadvertiserdemo
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.rakuten.attribution.sdk.Configuration
-import com.rakuten.attribution.sdk.RAdAttribution
 
 class MainActivity : AppCompatActivity() {
     companion object {

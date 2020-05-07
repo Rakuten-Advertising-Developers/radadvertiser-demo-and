@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.android.radadvertiserdemo.R
 import com.example.android.radadvertiserdemo.databinding.FragmentOverviewBinding
+import com.example.android.radadvertiserdemo.links.ResolveLinksFragment
 import com.example.android.radadvertiserdemo.network.ProductApiFilter
 
 /**
@@ -55,7 +56,7 @@ class OverviewFragment : Fragment() {
         })
 
         viewModel.navigateToSelectedProperty.observe(this, Observer {
-            if ( null != it ) {
+            if (null != it) {
                 // Must find the NavController from the Fragment
                 this.findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
                 // Tell the ViewModel we've made the navigate call to prevent multiple navigation
@@ -63,6 +64,9 @@ class OverviewFragment : Fragment() {
             }
         })
 
+        binding.linksButton.setOnClickListener {
+            openResolveLinksFragment()
+        }
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -88,5 +92,12 @@ class OverviewFragment : Fragment() {
                 }
         )
         return true
+    }
+
+    private fun openResolveLinksFragment(){
+        parentFragment?.requireFragmentManager()?.beginTransaction()
+                ?.add(R.id.container, ResolveLinksFragment(), ResolveLinksFragment.tag)
+                ?.addToBackStack(ResolveLinksFragment.tag)
+                ?.commit()
     }
 }
