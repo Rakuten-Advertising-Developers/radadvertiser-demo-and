@@ -17,18 +17,21 @@
 
 package com.example.android.radadvertiserdemo.overview
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.android.radadvertiserdemo.network.ProductApi
+import com.example.android.radadvertiserdemo.MainActivity
 import com.example.android.radadvertiserdemo.network.ProductApiFilter
 import com.example.android.radadvertiserdemo.network.Product
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 enum class ProductApiStatus { LOADING, ERROR, DONE }
+
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
  */
@@ -75,21 +78,45 @@ class OverviewViewModel : ViewModel() {
      * returns a coroutine Deferred, which we await to get the result of the transaction.
      * @param filter the [ProductApiFilter] that is sent as part of the web server request
      */
-     private fun getProducts(filter: ProductApiFilter) {
-        coroutineScope.launch {
-            // Get the Deferred object for our Retrofit request
-            var getProductsDeferred = ProductApi.retrofitService.getProducts(filter.value)
-            try {
-                _status.value = ProductApiStatus.LOADING
-                // this will run on a thread managed by Retrofit
-                val listResult = getProductsDeferred.await()
-                _status.value = ProductApiStatus.DONE
-                _products.value = listResult
-            } catch (e: Exception) {
-                _status.value = ProductApiStatus.ERROR
-                _products.value = ArrayList()
-            }
-        }
+//    private fun getProducts(filter: ProductApiFilter) {
+//        coroutineScope.launch {
+//            // Get the Deferred object for our Retrofit request
+//            val getProductsDeferred = ProductApi.retrofitService.getProducts(filter.value)
+//            try {
+//                _status.value = ProductApiStatus.LOADING
+//                // this will run on a thread managed by Retrofit
+//                val listResult = getProductsDeferred.await()
+//                _status.value = ProductApiStatus.DONE
+//                _products.value = listResult
+//            } catch (e: Exception) {
+//                _status.value = ProductApiStatus.ERROR
+//                _products.value = ArrayList()
+//            }
+//        }
+//    }
+
+    private fun getProducts(filter: ProductApiFilter) {
+        _status.value = ProductApiStatus.LOADING
+
+        Firebase.firestore.collection("products")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        Log.d(MainActivity.tag, "${document.id} => ${document.data}")
+                    }
+                    val products = result.documents.map {
+                        Product(name = it["name"].toString(),
+                                imageUrl = it["image-url"].toString(),
+                                price = it["price"].toString().toDouble())
+                    }
+
+                    _status.value = ProductApiStatus.DONE
+                    _products.value = products
+                }
+                .addOnFailureListener { exception ->
+                    _status.value = ProductApiStatus.ERROR
+                    _products.value = ArrayList()
+                }
     }
 
     /**

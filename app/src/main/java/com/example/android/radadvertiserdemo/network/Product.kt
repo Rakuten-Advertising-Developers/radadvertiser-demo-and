@@ -20,7 +20,6 @@ package com.example.android.radadvertiserdemo.network
 import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import com.example.android.radadvertiserdemo.overview.ProductApiStatus
-import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -31,11 +30,10 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class Product(
-        val id: String,
-        // used to map img_src from the JSON to imgSrcUrl in our class
-        @Json(name = "img_src") val imgSrcUrl: String,
-        val type: String,
+        val name: String,
+        val imageUrl: String,
         val price: Double) : Parcelable {
-    val isRental
-        get() = type == "rent"
+
+    val priceString = "$price$"
+    val isRental = false
 }

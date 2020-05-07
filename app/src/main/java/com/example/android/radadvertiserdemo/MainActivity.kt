@@ -18,10 +18,17 @@
 package com.example.android.radadvertiserdemo
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.rakuten.attribution.sdk.Configuration
 import com.rakuten.attribution.sdk.RAdAttribution
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        val tag = MainActivity::class.java.simpleName
+    }
 
     /**
      * Our MainActivity is only responsible for setting the content view that contains the
@@ -29,7 +36,30 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        RAdAttribution(baseContext)
         setContentView(R.layout.activity_main)
+
+        val configuration = Configuration(
+                appId = "",
+                privateKey = "",
+                isManualAppLaunch = false
+        )
+
+        val attribution = RAdAttribution(baseContext, configuration)
+
+        basicRead()
+    }
+
+    private fun basicRead() {
+
+        Firebase.firestore.collection("products")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        Log.d(tag, "${document.id} => ${document.data}")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.w(tag, "Error getting documents.", exception)
+                }
     }
 }

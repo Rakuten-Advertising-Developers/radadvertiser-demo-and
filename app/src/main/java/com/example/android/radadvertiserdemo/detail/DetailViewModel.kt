@@ -69,6 +69,6 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
     fun onPurchaseClicked() {
         Log.i("atttibution SDK", "clicked")
 
-        RAdAttribution( _context).sendPurchaseEvent()
+//        RAdAttribution( _context).sendPurchaseEvent()
     }
 }
