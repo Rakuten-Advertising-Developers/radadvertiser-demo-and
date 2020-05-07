@@ -23,9 +23,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.example.android.radadvertiserdemo.BuildConfig
 import com.example.android.radadvertiserdemo.R
 import com.example.android.radadvertiserdemo.network.Product
+import com.rakuten.attribution.sdk.Configuration
 import com.rakuten.attribution.sdk.RAdAttribution
+import com.rakuten.attribution.sdk.Result
 
 /**
  *  The [ViewModel] associated with the [DetailFragment], containing information about the selected
@@ -36,6 +39,8 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
     private val _context = app.applicationContext
     private val _selectedProduct = MutableLiveData<Product>()
 
+
+
     // The external LiveData for the SelectedProperty
     val selectedProduct: LiveData<Product>
         get() = _selectedProduct
@@ -45,30 +50,58 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
         _selectedProduct.value = product
     }
 
+    private val _serverResponse = MutableLiveData<String>()
+    val serverResponse: LiveData<String>
+        get() = _serverResponse
+
     // The displayPropertyPrice formatted Transformation Map LiveData, which displays the sale
     // or rental price.
     val displayProductPrice = Transformations.map(selectedProduct) {
         app.applicationContext.getString(
-            when (it.isRental) {
-                true -> R.string.display_price_monthly_rental
-                false -> R.string.display_price
-            }, it.price)
+                when (it.isRental) {
+                    true -> R.string.display_price_monthly_rental
+                    false -> R.string.display_price
+                }, it.price)
     }
 
     // The displayPropertyType formatted Transformation Map LiveData, which displays the
     // "For Rent/Sale" String
     val displayPoductType = Transformations.map(selectedProduct) {
         app.applicationContext.getString(R.string.display_type,
-            app.applicationContext.getString(
-                when(it.isRental) {
-                    true -> R.string.type_rent
-                    false -> R.string.type_sale
-                }))
+                app.applicationContext.getString(
+                        when (it.isRental) {
+                            true -> R.string.type_rent
+                            false -> R.string.type_sale
+                        }))
     }
 
     fun onPurchaseClicked() {
         Log.i("atttibution SDK", "clicked")
 
-//        RAdAttribution( _context).sendPurchaseEvent()
+        val secretKey = _context.assets
+                .open("private_key")
+                .bufferedReader()
+                .use { it.readText() }
+
+        val configuration = Configuration(
+                appId = BuildConfig.APPLICATION_ID,
+                privateKey = secretKey,
+                isManualAppLaunch = false
+        )
+        val attribution = RAdAttribution(_context, configuration)
+        attribution.eventSender.sendEvent("ADD_TO_CART") { result ->
+            when (result) {
+                is Result.Success -> {
+                    _context.run {
+                       _serverResponse.postValue(result.data.message)
+                    }
+                }
+                is Result.Error -> {
+                    _context.run {
+                        _serverResponse.postValue(result.message)
+                    }
+                }
+            }
+        }
     }
 }

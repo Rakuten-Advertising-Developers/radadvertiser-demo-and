@@ -37,29 +37,5 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val configuration = Configuration(
-                appId = "",
-                privateKey = "",
-                isManualAppLaunch = false
-        )
-
-        val attribution = RAdAttribution(baseContext, configuration)
-
-        basicRead()
-    }
-
-    private fun basicRead() {
-
-        Firebase.firestore.collection("products")
-                .get()
-                .addOnSuccessListener { result ->
-                    for (document in result) {
-                        Log.d(tag, "${document.id} => ${document.data}")
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.w(tag, "Error getting documents.", exception)
-                }
     }
 }
