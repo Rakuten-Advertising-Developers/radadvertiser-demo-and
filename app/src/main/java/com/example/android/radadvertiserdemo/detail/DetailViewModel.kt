@@ -21,10 +21,8 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.android.radadvertiserdemo.BuildConfig
-import com.example.android.radadvertiserdemo.R
 import com.example.android.radadvertiserdemo.network.Product
 import com.rakuten.attribution.sdk.Configuration
 import com.rakuten.attribution.sdk.RAdAttribution
@@ -48,33 +46,12 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
         _selectedProduct.value = product
     }
 
-    private val _serverResponse = MutableLiveData<String>()
-    val serverResponse: LiveData<String>
-        get() = _serverResponse
-
-    // The displayPropertyPrice formatted Transformation Map LiveData, which displays the sale
-    // or rental price.
-    val displayProductPrice = Transformations.map(selectedProduct) {
-        app.applicationContext.getString(
-                when (it.isRental) {
-                    true -> R.string.display_price_monthly_rental
-                    false -> R.string.display_price
-                }, it.price)
-    }
-
-    // The displayPropertyType formatted Transformation Map LiveData, which displays the
-    // "For Rent/Sale" String
-    val displayPoductType = Transformations.map(selectedProduct) {
-        app.applicationContext.getString(R.string.display_type,
-                app.applicationContext.getString(
-                        when (it.isRental) {
-                            true -> R.string.type_rent
-                            false -> R.string.type_sale
-                        }))
-    }
+    private val _serveEvent = MutableLiveData<Pair<String, String>>()
+    val serverResponse: LiveData<Pair<String, String>>
+        get() = _serveEvent
 
     fun onPurchaseClicked() {
-        Log.i("atttibution SDK", "clicked")
+        val action = "ADD_TO_CART"
 
         val secretKey = _context.assets
                 .open("private_key")
@@ -88,17 +65,15 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
         )
 
         val attribution = RAdAttribution(_context, configuration)
-        attribution.eventSender.sendEvent("ADD_TO_CART") { result ->
+
+        _serveEvent.postValue("Send Event" to action)
+        attribution.eventSender.sendEvent(action) { result ->
             when (result) {
                 is Result.Success -> {
-                    _context.run {
-                       _serverResponse.postValue(result.data.message)
-                    }
+                    _serveEvent.value = "Server response" to result.data.toString()
                 }
                 is Result.Error -> {
-                    _context.run {
-                        _serverResponse.postValue(result.message)
-                    }
+                    _serveEvent.value = "Server error" to result.message
                 }
             }
         }

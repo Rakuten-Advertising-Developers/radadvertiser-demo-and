@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -32,7 +33,6 @@ import kotlinx.android.synthetic.main.fragment_detail.view.*
  * through Jetpack Navigation's SafeArgs.
  */
 class DetailFragment : Fragment() {
-
     private lateinit var binding: FragmentDetailBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -53,10 +53,24 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.viewModel?.serverResponse?.observe(this, Observer { response ->
+        binding.viewModel?.serverResponse?.observe(viewLifecycleOwner, Observer { response ->
             if (response != null) {
-                binding.root.server_response_text.text = response
+                displayAction(response.first, response.second)
             }
         })
+    }
+
+    private fun displayAction(action: String, data: String) {
+        val actionView = TextView(context)
+        actionView.text = action
+        binding.root.container.addView(actionView)
+
+        val dataView = TextView(context)
+        dataView.text = data
+        binding.root.container.addView(dataView)
+
+        binding.root.scroll.post {
+            binding.root.scroll.fullScroll(View.FOCUS_DOWN)
+        }
     }
 }
