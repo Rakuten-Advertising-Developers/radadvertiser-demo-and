@@ -22,8 +22,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.radadvertiserdemo.databinding.GridViewItemBinding
 import com.example.android.radadvertiserdemo.network.Product
+import com.rakutenadvertising.radadvertiserdemo.databinding.GridViewItemBinding
 
 /**
  * This class implements a [RecyclerView] [ListAdapter] which uses Data Binding to present [List]

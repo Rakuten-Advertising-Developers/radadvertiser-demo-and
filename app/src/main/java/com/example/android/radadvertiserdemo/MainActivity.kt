@@ -21,6 +21,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android.radadvertiserdemo.links.ResolveLinksFragment
+import com.rakutenadvertising.radadvertiserdemo.R
 
 class MainActivity : AppCompatActivity() {
     companion object {

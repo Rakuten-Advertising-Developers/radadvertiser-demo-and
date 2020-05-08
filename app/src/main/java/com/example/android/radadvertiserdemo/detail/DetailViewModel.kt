@@ -17,16 +17,17 @@
 package com.example.android.radadvertiserdemo.detail
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.android.radadvertiserdemo.BuildConfig
 import com.example.android.radadvertiserdemo.network.Product
 import com.rakuten.attribution.sdk.Configuration
 import com.rakuten.attribution.sdk.RAdAttribution
 import com.rakuten.attribution.sdk.Result
+import com.rakuten.attribution.sdk.network.ContentItem
+import com.rakuten.attribution.sdk.network.EventData
+import com.rakutenadvertising.radadvertiserdemo.BuildConfig
 
 /**
  *  The [ViewModel] associated with the [DetailFragment], containing information about the selected
@@ -51,7 +52,31 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
         get() = _serveEvent
 
     fun onPurchaseClicked() {
-        val action = "ADD_TO_CART"
+        val action = "PURCHASE"
+        val _customData = mapOf<String,String>(
+                "customkey1" to "value1",
+                "customekey2" to "value2"
+        )
+        val selectedProduct = _selectedProduct.value
+
+        // sample event data
+        val _evenData = EventData(
+                "112233",
+                "shoe products",
+                "USD",
+                selectedProduct?.price,
+                0.0,
+                0.8,
+                "coupon_test_code",
+                "test affilation code",
+                action
+
+                )
+
+        val _content_items = arrayOf<ContentItem>(
+            ContentItem(sku = "77889900",productName =selectedProduct!!.name, quantity = 12, price = selectedProduct!!.price  )
+        )
+
 
         val secretKey = _context.assets
                 .open("private_key")
@@ -67,7 +92,7 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
         val attribution = RAdAttribution(_context, configuration)
 
         _serveEvent.postValue("Send Event" to action)
-        attribution.eventSender.sendEvent(action) { result ->
+        attribution.eventSender.sendEvent(action,customData = _customData,eventData = _evenData, contentItems = _content_items) { result ->
             when (result) {
                 is Result.Success -> {
                     _serveEvent.value = "Server response" to result.data.toString()

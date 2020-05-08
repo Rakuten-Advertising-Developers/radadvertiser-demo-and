@@ -27,6 +27,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.android.radadvertiserdemo.network.Product
 import com.example.android.radadvertiserdemo.overview.ProductApiStatus
 import com.example.android.radadvertiserdemo.overview.PhotoGridAdapter
+import com.rakutenadvertising.radadvertiserdemo.R
 
 /**
  * When there is no Product property data (data is null), hide the [RecyclerView], otherwise show it.

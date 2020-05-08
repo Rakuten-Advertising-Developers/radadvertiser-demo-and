@@ -23,10 +23,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import com.example.android.radadvertiserdemo.R
-import com.example.android.radadvertiserdemo.databinding.FragmentOverviewBinding
+
 import com.example.android.radadvertiserdemo.links.ResolveLinksFragment
 import com.example.android.radadvertiserdemo.network.ProductApiFilter
+import com.rakutenadvertising.radadvertiserdemo.R
+import com.rakutenadvertising.radadvertiserdemo.databinding.FragmentOverviewBinding
 
 /**
  * This fragment shows the the status of the Product web services transaction.

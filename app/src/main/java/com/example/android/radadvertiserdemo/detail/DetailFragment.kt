@@ -24,7 +24,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.android.radadvertiserdemo.databinding.FragmentDetailBinding
+import com.rakutenadvertising.radadvertiserdemo.databinding.FragmentDetailBinding
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 
 /**
