@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.example.android.radadvertiserdemo.BuildConfig
-import com.example.android.radadvertiserdemo.R
+
 import com.rakuten.attribution.sdk.Configuration
 import com.rakuten.attribution.sdk.RAdAttribution
 import com.rakuten.attribution.sdk.Result
+import com.rakutenadvertising.radadvertiserdemo.BuildConfig
+import com.rakutenadvertising.radadvertiserdemo.R
 
 
 class ResolveLinksFragment : Fragment() {
