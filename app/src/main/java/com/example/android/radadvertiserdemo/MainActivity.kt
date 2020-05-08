@@ -17,8 +17,10 @@
 
 package com.example.android.radadvertiserdemo
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.android.radadvertiserdemo.links.ResolveLinksFragment
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -32,5 +34,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        handleIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent) {
+        val appLinkAction = intent.action
+
+        if (appLinkAction == Intent.ACTION_VIEW) {
+            val fragment = ResolveLinksFragment.newInstance(intent.data.toString())
+
+            supportFragmentManager.beginTransaction()
+                    .add(R.id.container, fragment, ResolveLinksFragment.tag)
+                    .addToBackStack(ResolveLinksFragment.tag)
+                    .commit()
+        }
     }
 }

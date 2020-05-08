@@ -55,7 +55,7 @@ class OverviewFragment : Fragment() {
             viewModel.displayProductDetails(it)
         })
 
-        viewModel.navigateToSelectedProperty.observe(this, Observer {
+        viewModel.navigateToSelectedProperty.observe(viewLifecycleOwner, Observer {
             if (null != it) {
                 // Must find the NavController from the Fragment
                 this.findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
@@ -64,9 +64,6 @@ class OverviewFragment : Fragment() {
             }
         })
 
-        binding.linksButton.setOnClickListener {
-            openResolveLinksFragment()
-        }
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -92,12 +89,5 @@ class OverviewFragment : Fragment() {
                 }
         )
         return true
-    }
-
-    private fun openResolveLinksFragment(){
-        parentFragment?.requireFragmentManager()?.beginTransaction()
-                ?.add(R.id.container, ResolveLinksFragment(), ResolveLinksFragment.tag)
-                ?.addToBackStack(ResolveLinksFragment.tag)
-                ?.commit()
     }
 }
