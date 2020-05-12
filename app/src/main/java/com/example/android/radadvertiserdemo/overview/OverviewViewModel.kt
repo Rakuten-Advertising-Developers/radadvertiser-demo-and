@@ -17,13 +17,18 @@
 
 package com.example.android.radadvertiserdemo.overview
 
+import android.app.Application
 import android.util.Log
+import android.widget.Toast
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.radadvertiserdemo.MainActivity
-import com.example.android.radadvertiserdemo.network.ProductApiFilter
 import com.example.android.radadvertiserdemo.network.Product
+import com.example.android.radadvertiserdemo.network.ProductApiFilter
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
@@ -35,7 +40,10 @@ enum class ProductApiStatus { LOADING, ERROR, DONE }
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
  */
-class OverviewViewModel : ViewModel() {
+class OverviewViewModel(application: Application) : AndroidViewModel(application) {
+    companion object {
+        val TAG = OverviewViewModel::class.java.simpleName
+    }
 
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<ProductApiStatus>()
@@ -65,14 +73,37 @@ class OverviewViewModel : ViewModel() {
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    /**
-     * Call getProducts() on init so we can display status immediately.
-     */
     init {
-        getProducts(ProductApiFilter.SHOW_ALL)
+        val auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+        fireBaseSignIn(auth, currentUser)
     }
 
-    private fun getProducts(filter: ProductApiFilter) {
+    private fun fireBaseSignIn(auth: FirebaseAuth, currentUser: FirebaseUser?) {
+        val context = getApplication<Application>()
+
+        val (login, pass) = context.assets
+                .open("firebase_credentials")
+                .bufferedReader()
+                .use { it.readText() }.split(":")
+
+        auth.signInWithEmailAndPassword(login, pass)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithEmail:success")
+                        val user = auth.currentUser
+                        loadProducts()
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithEmail:failure", task.exception)
+                        Toast.makeText(context, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show()
+                    }
+                }
+    }
+
+    private fun loadProducts(filter: ProductApiFilter? = null) {
         _status.value = ProductApiStatus.LOADING
 
         Firebase.firestore.collection("products")
@@ -122,10 +153,10 @@ class OverviewViewModel : ViewModel() {
 
     /**
      * Updates the data set filter for the web services by querying the data with the new filter
-     * by calling [getProducts]
+     * by calling [loadProducts]
      * @param filter the [ProductApiFilter] that is sent as part of the web server request
      */
     fun updateFilter(filter: ProductApiFilter) {
-        getProducts(filter)
+        loadProducts(filter)
     }
 }

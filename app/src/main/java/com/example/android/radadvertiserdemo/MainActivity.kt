@@ -24,6 +24,7 @@ import com.example.android.radadvertiserdemo.links.ResolveLinksFragment
 import com.rakutenadvertising.radadvertiserdemo.R
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_INDEFINITE
+import com.rakutenadvertising.radadvertiserdemo.BuildConfig
 
 class MainActivity : AppCompatActivity() {
     companion object {

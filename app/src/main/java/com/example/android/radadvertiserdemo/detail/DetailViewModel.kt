@@ -92,7 +92,12 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
         val attribution = RAdAttribution(_context, configuration)
 
         _serveEvent.postValue("Send Event" to action)
-        attribution.eventSender.sendEvent(action,customData = _customData,eventData = _evenData, contentItems = _content_items) { result ->
+        attribution.eventSender.sendEvent(
+                action,
+                customData = _customData,
+                eventData = _evenData,
+                contentItems = _content_items
+        ) { result ->
             when (result) {
                 is Result.Success -> {
                     _serveEvent.value = "Server response" to result.data.toString()
