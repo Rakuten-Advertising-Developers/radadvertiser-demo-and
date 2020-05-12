@@ -22,6 +22,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android.radadvertiserdemo.links.ResolveLinksFragment
 import com.rakutenadvertising.radadvertiserdemo.R
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.LENGTH_INDEFINITE
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -44,15 +46,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleIntent(intent: Intent) {
-        val appLinkAction = intent.action
-
-        if (appLinkAction == Intent.ACTION_VIEW) {
-            val fragment = ResolveLinksFragment.newInstance(intent.data.toString())
-
-            supportFragmentManager.beginTransaction()
-                    .add(R.id.container, fragment, ResolveLinksFragment.tag)
-                    .addToBackStack(ResolveLinksFragment.tag)
-                    .commit()
+        if (intent.action == Intent.ACTION_VIEW) {
+            when (intent.scheme) {
+                "http", "https", BuildConfig.APP_SCHEME -> showResolveLinkScreen(intent)
+                null -> showError(intent.scheme)
+            }
         }
+    }
+
+    private fun showResolveLinkScreen(intent: Intent) {
+        val fragment = ResolveLinksFragment.newInstance(intent.data.toString())
+        supportFragmentManager.beginTransaction()
+                .add(R.id.container, fragment, ResolveLinksFragment.tag)
+                .addToBackStack(ResolveLinksFragment.tag)
+                .commit()
+    }
+
+    private fun showError(scheme: String?) {
+        Snackbar.make(
+                findViewById(R.id.container),
+                "Invalid scheme: $scheme",
+                LENGTH_INDEFINITE
+        ).show()
     }
 }
