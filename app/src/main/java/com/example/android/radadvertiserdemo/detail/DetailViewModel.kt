@@ -22,20 +22,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.radadvertiserdemo.network.Product
-import com.rakuten.attribution.sdk.Configuration
 import com.rakuten.attribution.sdk.RAdAttribution
 import com.rakuten.attribution.sdk.Result
 import com.rakuten.attribution.sdk.network.ContentItem
 import com.rakuten.attribution.sdk.network.EventData
-import com.rakutenadvertising.radadvertiserdemo.BuildConfig
 
 /**
  *  The [ViewModel] associated with the [DetailFragment], containing information about the selected
  *  [Product].
  */
 class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app) {
-
-    private val _context = app.applicationContext
     private val _selectedProduct = MutableLiveData<Product>()
 
     // The external LiveData for the SelectedProperty
@@ -53,14 +49,14 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
 
     fun onPurchaseClicked() {
         val action = "PURCHASE"
-        val _customData = mapOf<String,String>(
+        val customData = mapOf(
                 "customkey1" to "value1",
                 "customekey2" to "value2"
         )
         val selectedProduct = _selectedProduct.value
 
         // sample event data
-        val _evenData = EventData(
+        val eventData = EventData(
                 "112233",
                 "shoe products",
                 "USD",
@@ -71,32 +67,23 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
                 "test affilation code",
                 action
 
+        )
+
+        val contentItems = arrayOf(
+                ContentItem(
+                        sku = "77889900",
+                        productName = selectedProduct!!.name,
+                        quantity = 12,
+                        price = selectedProduct.price
                 )
-
-        val _content_items = arrayOf<ContentItem>(
-            ContentItem(sku = "77889900",productName =selectedProduct!!.name, quantity = 12, price = selectedProduct!!.price  )
         )
-
-
-        val secretKey = _context.assets
-                .open("private_key")
-                .bufferedReader()
-                .use { it.readText() }
-
-        val configuration = Configuration(
-                appId = BuildConfig.APPLICATION_ID,
-                privateKey = secretKey,
-                isManualAppLaunch = false
-        )
-
-        val attribution = RAdAttribution(_context, configuration)
-
         _serveEvent.postValue("Send Event" to action)
-        attribution.eventSender.sendEvent(
+
+        RAdAttribution.eventSender.sendEvent(
                 action,
-                customData = _customData,
-                eventData = _evenData,
-                contentItems = _content_items
+                customData = customData,
+                eventData = eventData,
+                contentItems = contentItems
         ) { result ->
             when (result) {
                 is Result.Success -> {

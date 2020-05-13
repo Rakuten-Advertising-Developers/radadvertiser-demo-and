@@ -1,17 +1,14 @@
 package com.example.android.radadvertiserdemo.links
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-
-import com.rakuten.attribution.sdk.Configuration
+import androidx.fragment.app.Fragment
 import com.rakuten.attribution.sdk.RAdAttribution
 import com.rakuten.attribution.sdk.Result
-import com.rakutenadvertising.radadvertiserdemo.BuildConfig
 import com.rakutenadvertising.radadvertiserdemo.R
 
 
@@ -51,19 +48,8 @@ class ResolveLinksFragment : Fragment() {
 
     private fun resolveLink(link: String) {
         displayAction(action = "Resolve Link", data = link)
-        val secretKey = context!!.assets
-                .open("private_key")
-                .bufferedReader()
-                .use { it.readText() }
 
-        val configuration = Configuration(
-                appId = BuildConfig.APPLICATION_ID,
-                privateKey = secretKey,
-                isManualAppLaunch = false
-        )
-
-        val attribution = RAdAttribution(context!!, configuration)
-        attribution.linkResolver.resolve(link) {
+        RAdAttribution.linkResolver.resolve(link) {
             when (it) {
                 is Result.Success -> {
                     displayAction(action = "Server response", data = it.data.toString())
@@ -75,13 +61,13 @@ class ResolveLinksFragment : Fragment() {
         }
     }
 
-    private fun displayAction(action: String, data: String){
-             val actionView = TextView(context)
-            actionView.text = action
-            (view as LinearLayout).addView(actionView)
+    private fun displayAction(action: String, data: String) {
+        val actionView = TextView(context)
+        actionView.text = action
+        (view as LinearLayout).addView(actionView)
 
-            val dataView = TextView(context)
-            dataView.text = data
-            (view as LinearLayout).addView(dataView)
+        val dataView = TextView(context)
+        dataView.text = data
+        (view as LinearLayout).addView(dataView)
     }
 }
