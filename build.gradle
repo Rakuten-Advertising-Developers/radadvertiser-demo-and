@@ -1,4 +1,5 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
 
 buildscript {
     ext {
@@ -6,10 +7,10 @@ buildscript {
         // navigation where the versions of the plugin needs to be the same as the version of the
         // library defined in the app Gradle file
         version_android_gradle_plugin = '3.6.3'
-        version_core = "1.0.1"
+        version_core = "1.2.0"
         version_constraint_layout = "1.1.3"
         version_glide = "4.8.0"
-        version_kotlin = "1.3.71"
+        version_kotlin = "1.3.72"
         version_kotlin_coroutines = "1.1.0"
         version_lifecycle_extensions = "2.0.0"
         version_moshi = "1.8.0"
@@ -36,6 +37,14 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/Rakuten-Advertising-Developers/RADAttribution-SDK-Android")
+            credentials {
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
+        }
     }
 }
 

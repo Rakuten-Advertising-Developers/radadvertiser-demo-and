@@ -57,16 +57,15 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
 
         // sample event data
         val eventData = EventData(
-                "112233",
-                "shoe products",
-                "USD",
-                selectedProduct?.price,
-                0.0,
-                0.8,
-                "coupon_test_code",
-                "test affilation code",
-                action
-
+                transactionId = "112233",
+                searchQuery = "shoe products",
+                currency = "USD",
+                revenue = selectedProduct?.price,
+                shipping = 0.0,
+                tax = 0.8,
+                coupon = "coupon_test_code",
+                affiliation = "test affilation code",
+                description = action
         )
 
         val contentItems = arrayOf(
@@ -80,7 +79,7 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
         _serveEvent.postValue("Send Event" to action)
 
         RAdAttribution.eventSender.sendEvent(
-                action,
+                name = action,
                 customData = customData,
                 eventData = eventData,
                 contentItems = contentItems
