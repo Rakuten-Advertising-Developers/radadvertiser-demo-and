@@ -24,8 +24,8 @@ import androidx.lifecycle.ViewModel
 import com.example.android.radadvertiserdemo.network.Product
 import com.rakuten.attribution.sdk.RAdAttribution
 import com.rakuten.attribution.sdk.Result
-import com.rakuten.attribution.sdk.network.ContentItem
-import com.rakuten.attribution.sdk.network.EventData
+import com.rakuten.attribution.sdk.ContentItem
+import com.rakuten.attribution.sdk.EventData
 
 /**
  *  The [ViewModel] associated with the [DetailFragment], containing information about the selected

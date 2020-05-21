@@ -5,6 +5,8 @@ import com.rakuten.attribution.sdk.Configuration
 import com.rakuten.attribution.sdk.RAdAttribution
 import com.rakutenadvertising.radadvertiserdemo.BuildConfig
 
+const val ENDPOINT_URL = "https://attribution-sdk-endpoint-ff5ckcoswq-uc.a.run.app/v2/"
+
 class DemoApplication : Application() {
     override fun onCreate() {
         super.onCreate()
@@ -17,7 +19,9 @@ class DemoApplication : Application() {
         val configuration = Configuration(
                 appId = BuildConfig.APPLICATION_ID,
                 privateKey = secretKey,
-                isManualAppLaunch = false
+                isManualAppLaunch = false,
+                endpointUrl = ENDPOINT_URL
+
         )
         RAdAttribution.setup(this, configuration)
     }
