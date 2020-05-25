@@ -18,6 +18,7 @@ class DemoApplication : Application() {
 
         val configuration = Configuration(
                 appId = BuildConfig.APPLICATION_ID,
+                appVersion = BuildConfig.VERSION_NAME,
                 privateKey = secretKey,
                 isManualAppLaunch = false,
                 endpointUrl = ENDPOINT_URL

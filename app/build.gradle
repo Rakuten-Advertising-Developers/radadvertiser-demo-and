@@ -39,8 +39,8 @@ android {
         applicationId "com.rakutenadvertising.radadvertiserdemo"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -116,5 +116,5 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
     gitSubmoduleImplementation project(path: ':radattribution-sdk-android')
-    gradleImplementation 'io.github.rakuten-advertising-developers:attribution-sdk:0.0.2'
+    gradleImplementation 'io.github.rakuten-advertising-developers:attribution-sdk:0.0.3'
 }
