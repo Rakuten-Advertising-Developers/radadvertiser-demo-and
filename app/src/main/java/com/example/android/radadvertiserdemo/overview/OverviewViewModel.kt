@@ -28,11 +28,8 @@ import com.example.android.radadvertiserdemo.MainActivity
 import com.example.android.radadvertiserdemo.network.Product
 import com.example.android.radadvertiserdemo.network.ProductApiFilter
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 
 enum class ProductApiStatus { LOADING, ERROR, DONE }
@@ -70,16 +67,11 @@ class OverviewViewModel(application: Application) : AndroidViewModel(application
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
 
-    // the Coroutine runs using the Main (UI) dispatcher
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
     init {
-        val auth = FirebaseAuth.getInstance()
-        val currentUser = auth.currentUser
-        fireBaseSignIn(auth, currentUser)
+        fireBaseSignIn(FirebaseAuth.getInstance())
     }
 
-    private fun fireBaseSignIn(auth: FirebaseAuth, currentUser: FirebaseUser?) {
+    private fun fireBaseSignIn(auth: FirebaseAuth) {
         val context = getApplication<Application>()
 
         val (login, pass) = context.assets
@@ -92,7 +84,6 @@ class OverviewViewModel(application: Application) : AndroidViewModel(application
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success")
-                        val user = auth.currentUser
                         loadProducts()
                     } else {
                         // If sign in fails, display a message to the user.
@@ -112,16 +103,23 @@ class OverviewViewModel(application: Application) : AndroidViewModel(application
                     for (document in result) {
                         Log.d(MainActivity.tag, "${document.id} => ${document.data}")
                     }
-                    val products = result.documents.map {
-                        Product(name = it["name"].toString(),
-                                imageUrl = it["image-url"].toString(),
-                                price = it["price"].toString().toDouble())
-                    }
-
+                    val products = result.documents
+                            .filter {
+                                if (filter == null
+                                        || filter.value == ProductApiFilter.SHOW_ALL.value) {
+                                    return@filter true
+                                }
+                                return@filter it["type"]?.equals(filter.value) ?: true
+                            }
+                            .map {
+                                Product(name = it["name"].toString(),
+                                        imageUrl = it["image-url"].toString(),
+                                        price = it["price"].toString().toDouble())
+                            }
                     _status.value = ProductApiStatus.DONE
                     _products.value = products
                 }
-                .addOnFailureListener { exception ->
+                .addOnFailureListener {
                     _status.value = ProductApiStatus.ERROR
                     _products.value = ArrayList()
                 }

@@ -15,7 +15,7 @@
  *
  */
 
-package com.example.android.radadvertiserdemo.overview
+package com.example.android.radadvertiserdemo.cart
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -30,7 +30,7 @@ import com.rakutenadvertising.radadvertiserdemo.databinding.GridViewItemBinding
  * data, including computing diffs between lists.
  * @param onClick a lambda that takes the
  */
-class PhotoGridAdapter(private val onClickListener: OnClickListener ) :
+class PhotoGridAdapter( val onClickListener: OnClickListener ) :
         ListAdapter<Product, PhotoGridAdapter.ProductPropertyViewHolder>(DiffCallback) {
     /**
      * The ProductPropertyViewHolder constructor takes the binding variable from the associated

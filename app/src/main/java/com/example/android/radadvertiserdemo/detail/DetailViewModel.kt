@@ -21,11 +21,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.android.radadvertiserdemo.DemoApplication
 import com.example.android.radadvertiserdemo.network.Product
 import com.rakuten.attribution.sdk.RAdAttribution
 import com.rakuten.attribution.sdk.Result
 import com.rakuten.attribution.sdk.ContentItem
 import com.rakuten.attribution.sdk.EventData
+import com.rakutenadvertising.radadvertiserdemo.R
 
 /**
  *  The [ViewModel] associated with the [DetailFragment], containing information about the selected
@@ -47,20 +49,23 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
     val serverResponse: LiveData<Pair<String, String>>
         get() = _serveEvent
 
-    fun onPurchaseClicked() {
-        val action = "PURCHASE"
+    fun onAddToCartClicked() {
+        val selectedProduct = _selectedProduct.value ?: return
+        sendEvent(selectedProduct)
+    }
+
+    private fun sendEvent(selectedProduct: Product) {
+        val action = getApplication<DemoApplication>().getString(R.string.add_to_cart)
         val customData = mapOf(
                 "customkey1" to "value1",
                 "customekey2" to "value2"
         )
-        val selectedProduct = _selectedProduct.value
-
         // sample event data
         val eventData = EventData(
                 transactionId = "112233",
                 searchQuery = "shoe products",
                 currency = "USD",
-                revenue = selectedProduct?.price,
+                revenue = selectedProduct.price,
                 shipping = 0.0,
                 tax = 0.8,
                 coupon = "coupon_test_code",
@@ -71,7 +76,7 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
         val contentItems = arrayOf(
                 ContentItem(
                         sku = "77889900",
-                        productName = selectedProduct!!.name,
+                        productName = selectedProduct.name,
                         quantity = 12,
                         price = selectedProduct.price
                 )

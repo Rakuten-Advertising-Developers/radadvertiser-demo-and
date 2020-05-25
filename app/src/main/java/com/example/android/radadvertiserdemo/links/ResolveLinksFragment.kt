@@ -14,17 +14,7 @@ import com.rakutenadvertising.radadvertiserdemo.R
 
 class ResolveLinksFragment : Fragment() {
     companion object {
-        val tag = ResolveLinksFragment::class.java.simpleName
-
-        private const val LINK_PARAM = "link_param"
-
-        @JvmStatic
-        fun newInstance(link: String) =
-                ResolveLinksFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(LINK_PARAM, link)
-                    }
-                }
+        const val LINK_PARAM = "link_param"
     }
 
     private var link: String = ""

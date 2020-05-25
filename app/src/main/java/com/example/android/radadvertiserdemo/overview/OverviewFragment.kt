@@ -20,8 +20,8 @@ package com.example.android.radadvertiserdemo.overview
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.android.radadvertiserdemo.network.ProductApiFilter
 import com.rakutenadvertising.radadvertiserdemo.R
@@ -32,13 +32,7 @@ import com.rakutenadvertising.radadvertiserdemo.databinding.FragmentOverviewBind
  * This fragment shows the the status of the Product web services transaction.
  */
 class OverviewFragment : Fragment() {
-
-    /**
-     * Lazily initialize our [OverviewViewModel].
-     */
-    private val viewModel: OverviewViewModel by lazy {
-        ViewModelProviders.of(this).get(OverviewViewModel::class.java)
-    }
+    private val viewModel: OverviewViewModel by activityViewModels()
 
     /**
      * Inflates the layout with Data Binding, sets its lifecycle owner to the OverviewFragment
@@ -48,17 +42,15 @@ class OverviewFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val binding = FragmentOverviewBinding.inflate(inflater)
         binding.lifecycleOwner = this
-
         binding.viewModel = viewModel
-
-        binding.photosGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
+        binding.productsGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
             viewModel.displayProductDetails(it)
         })
 
         viewModel.navigateToSelectedProperty.observe(viewLifecycleOwner, Observer {
             if (null != it) {
                 // Must find the NavController from the Fragment
-                this.findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
+                this.findNavController().navigate(OverviewFragmentDirections.showDetailsAction(it))
                 // Tell the ViewModel we've made the navigate call to prevent multiple navigation
                 viewModel.displayProductDetailsComplete()
             }

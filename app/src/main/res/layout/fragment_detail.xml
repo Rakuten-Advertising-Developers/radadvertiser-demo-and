@@ -72,20 +72,19 @@
                 android:text="@{viewModel.selectedProduct.priceString}"
                 android:textColor="#de000000"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/button"
+                app:layout_constraintBottom_toTopOf="@+id/add_to_cart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/property_type_text"
                 tools:text="$100,000" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/add_to_cart"
                 android:layout_width="167dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="8dp"
-                android:onClick="@{() ->  viewModel.onPurchaseClicked()}"
-                android:text="Purchase"
+                android:text="@string/add_to_cart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.516"
                 app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +98,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button" >
+                app:layout_constraintTop_toBottomOf="@+id/add_to_cart" >
 
                 <TextView
                     android:layout_width="wrap_content"

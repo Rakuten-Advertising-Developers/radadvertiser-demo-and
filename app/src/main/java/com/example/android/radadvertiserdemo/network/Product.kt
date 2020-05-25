@@ -18,22 +18,15 @@
 package com.example.android.radadvertiserdemo.network
 
 import android.os.Parcelable
-import androidx.lifecycle.LiveData
-import com.example.android.radadvertiserdemo.overview.ProductApiStatus
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
-/**
- * Gets Product  from the Product API Retrofit service and updates the
- * [Product] and [ProductApiStatus] [LiveData]. The Retrofit service returns a coroutine
- * Deferred, which we await to get the result of the transaction.
- * @param filter the [ProductApiFilter] that is sent as part of the web server request
- */
 @Parcelize
 data class Product(
         val name: String,
         val imageUrl: String,
         val price: Double) : Parcelable {
 
+    @IgnoredOnParcel
     val priceString = "$price$"
-    val isRental = false
 }

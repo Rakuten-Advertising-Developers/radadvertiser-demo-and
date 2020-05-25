@@ -26,4 +26,10 @@
     <string name="display_price_monthly_rental">$%,.0f/month</string>
     <string name="display_price">$%,.0f</string>
     <string name="open_links_fragment">Open links fragment</string>
+    <string name="home">Catalog</string>
+    <string name="cart">Cart</string>
+
+    <string name="add_to_cart">Add To Cart</string>
+    <string name="cart_is_empty">Your cart is empty</string>
+    <string name="purchase">Purchase</string>
 </resources>

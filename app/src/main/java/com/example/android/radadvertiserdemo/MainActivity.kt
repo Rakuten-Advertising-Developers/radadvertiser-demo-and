@@ -20,16 +20,25 @@ package com.example.android.radadvertiserdemo
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.android.radadvertiserdemo.links.ResolveLinksFragment
-import com.rakutenadvertising.radadvertiserdemo.R
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import com.example.android.radadvertiserdemo.links.ResolveLinksFragment.Companion.LINK_PARAM
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_INDEFINITE
 import com.rakutenadvertising.radadvertiserdemo.BuildConfig
+import com.rakutenadvertising.radadvertiserdemo.R
 
 class MainActivity : AppCompatActivity() {
     companion object {
         val tag = MainActivity::class.java.simpleName
     }
+
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     /**
      * Our MainActivity is only responsible for setting the content view that contains the
@@ -37,8 +46,23 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.main_activity)
         handleIntent(intent)
+
+        val host: NavHostFragment = supportFragmentManager
+                .findFragmentById(R.id.nav_host_fragment) as NavHostFragment? ?: return
+
+        val navController = host.navController
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
+        bottomNav?.setupWithNavController(navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.nav_host_fragment).navigateUp(appBarConfiguration)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -56,11 +80,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showResolveLinkScreen(intent: Intent) {
-        val fragment = ResolveLinksFragment.newInstance(intent.data.toString())
-        supportFragmentManager.beginTransaction()
-                .add(R.id.container, fragment, ResolveLinksFragment.tag)
-                .addToBackStack(ResolveLinksFragment.tag)
-                .commit()
+
+        val args = Bundle()
+        args.putString(LINK_PARAM, intent.data.toString())
+        findNavController(R.id.nav_host_fragment)
+                .navigate(R.id.resolve_link, args)
     }
 
     private fun showError(scheme: String?) {

@@ -22,8 +22,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import com.example.android.radadvertiserdemo.cart.CartViewModel
 import com.rakutenadvertising.radadvertiserdemo.databinding.FragmentDetailBinding
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 
@@ -34,18 +35,19 @@ import kotlinx.android.synthetic.main.fragment_detail.view.*
  */
 class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
+    private val cartViewModel: CartViewModel by activityViewModels()
+    private val detailViewModel: DetailViewModel by lazy {
+        val productProperty = DetailFragmentArgs.fromBundle(requireArguments()).selectedProduct
+        val viewModelFactory = DetailViewModelFactory(productProperty, requireActivity().application)
+        viewModelFactory.create(DetailViewModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val application = requireNotNull(activity).application
 
         binding = FragmentDetailBinding.inflate(inflater)
         binding.lifecycleOwner = this
-        val productProperty = DetailFragmentArgs.fromBundle(arguments!!).selectedProduct
-        val viewModelFactory = DetailViewModelFactory(productProperty, application)
-
-        binding.viewModel = ViewModelProviders.of(
-                this, viewModelFactory).get(DetailViewModel::class.java)
+        binding.viewModel = detailViewModel
 
         return binding.root
     }
@@ -55,9 +57,15 @@ class DetailFragment : Fragment() {
 
         binding.viewModel?.serverResponse?.observe(viewLifecycleOwner, Observer { response ->
             if (response != null) {
-                displayAction(response.first, response.second)
+                displayAction(action = response.first, data = response.second)
             }
         })
+
+        val product = DetailFragmentArgs.fromBundle(requireArguments()).selectedProduct
+        binding.root.add_to_cart.setOnClickListener {
+            detailViewModel.onAddToCartClicked()
+            cartViewModel.addProductToCart(product)
+        }
     }
 
     private fun displayAction(action: String, data: String) {

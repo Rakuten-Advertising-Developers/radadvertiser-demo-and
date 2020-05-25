@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home_dest"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/cart_fragment_dest"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/cart" />
+</menu>

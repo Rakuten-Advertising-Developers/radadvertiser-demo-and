@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/home_dest">
+    <fragment
+        android:id="@+id/home_dest"
+        android:name="com.example.android.radadvertiserdemo.overview.OverviewFragment"
+        android:label="@string/home"
+        tools:layout="@layout/fragment_overview">
+
+        <action
+            android:id="@+id/show_details_action"
+            app:destination="@+id/details_fragment_dest" />
+
+        <action
+            android:id="@+id/resolve_link"
+            app:destination="@id/resolve_link_fragment_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cart_fragment_dest"
+        android:name="com.example.android.radadvertiserdemo.cart.CartFragment"
+        tools:layout="@layout/fragment_cart">
+    </fragment>
+
+    <fragment
+        android:id="@+id/details_fragment_dest"
+        android:name="com.example.android.radadvertiserdemo.detail.DetailFragment"
+        tools:layout="@layout/fragment_detail">
+
+        <argument
+            android:name="selectedProduct"
+            app:argType="com.example.android.radadvertiserdemo.network.Product" />
+
+        <action
+            android:id="@+id/pop_back_action"
+            app:popUpTo="@id/home_dest" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/resolve_link_fragment_dest"
+        android:name="com.example.android.radadvertiserdemo.links.ResolveLinksFragment"
+        tools:layout="@layout/fragment_resolve_links">
+
+        <argument android:name="@{ResolveLinksFragment.LINK_PARAM}" />
+    </fragment>
+</navigation>
