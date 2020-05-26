@@ -29,7 +29,9 @@
     <string name="home">Catalog</string>
     <string name="cart">Cart</string>
 
-    <string name="add_to_cart">Add To Cart</string>
+    <string name="add_to_cart_event">ADD_TO_CART</string>
+    <string name="purchase_event">PURCHASE</string>
     <string name="cart_is_empty">Your cart is empty</string>
     <string name="purchase">Purchase</string>
+    <string name="add_to_cart">Add To Cart</string>
 </resources>

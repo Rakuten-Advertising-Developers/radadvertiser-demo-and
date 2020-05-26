@@ -55,7 +55,7 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
     }
 
     private fun sendEvent(selectedProduct: Product) {
-        val action = getApplication<DemoApplication>().getString(R.string.add_to_cart)
+        val action = getApplication<DemoApplication>().getString(R.string.add_to_cart_event)
         val customData = mapOf(
                 "customkey1" to "value1",
                 "customekey2" to "value2"
