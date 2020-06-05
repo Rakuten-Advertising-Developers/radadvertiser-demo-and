@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.rakuten.attribution.sdk.RAdAttribution
+import com.rakuten.attribution.sdk.RakutenAdvertisingAttribution
 import com.rakuten.attribution.sdk.Result
 import com.rakutenadvertising.radadvertiserdemo.R
 
@@ -39,7 +39,7 @@ class ResolveLinksFragment : Fragment() {
     private fun resolveLink(link: String) {
         displayAction(action = "Resolve Link", data = link)
 
-        RAdAttribution.linkResolver.resolve(link) {
+        RakutenAdvertisingAttribution.linkResolver.resolve(link) {
             when (it) {
                 is Result.Success -> {
                     displayAction(action = "Server response", data = it.data.toString())

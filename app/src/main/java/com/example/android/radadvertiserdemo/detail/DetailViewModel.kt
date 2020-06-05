@@ -23,7 +23,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.radadvertiserdemo.DemoApplication
 import com.example.android.radadvertiserdemo.network.Product
-import com.rakuten.attribution.sdk.RAdAttribution
+import com.rakuten.attribution.sdk.RakutenAdvertisingAttribution
 import com.rakuten.attribution.sdk.Result
 import com.rakuten.attribution.sdk.ContentItem
 import com.rakuten.attribution.sdk.EventData
@@ -83,7 +83,7 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
         )
         _serveEvent.postValue("Send Event" to action)
 
-        RAdAttribution.eventSender.sendEvent(
+        RakutenAdvertisingAttribution.eventSender.sendEvent(
                 name = action,
                 customData = customData,
                 eventData = eventData,

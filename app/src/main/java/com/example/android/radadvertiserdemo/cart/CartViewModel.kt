@@ -25,7 +25,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.radadvertiserdemo.network.Product
 import com.rakuten.attribution.sdk.ContentItem
-import com.rakuten.attribution.sdk.RAdAttribution
+import com.rakuten.attribution.sdk.RakutenAdvertisingAttribution
 import com.rakuten.attribution.sdk.Result
 
 /**
@@ -47,7 +47,7 @@ class CartViewModel(val context: Application) : AndroidViewModel(context) {
     }
 
     fun onPurchaseButtonClick() {
-        RAdAttribution.eventSender.sendEvent(
+        RakutenAdvertisingAttribution.eventSender.sendEvent(
                 "PURCHASE",
                 contentItems = getContentItems()
         ) {

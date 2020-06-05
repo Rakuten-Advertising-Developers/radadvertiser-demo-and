@@ -2,7 +2,7 @@ package com.example.android.radadvertiserdemo
 
 import android.app.Application
 import com.rakuten.attribution.sdk.Configuration
-import com.rakuten.attribution.sdk.RAdAttribution
+import com.rakuten.attribution.sdk.RakutenAdvertisingAttribution
 import com.rakutenadvertising.radadvertiserdemo.BuildConfig
 
 const val ENDPOINT_URL = "https://attribution-sdk-endpoint-ff5ckcoswq-uc.a.run.app/v2/"
@@ -24,6 +24,6 @@ class DemoApplication : Application() {
                 endpointUrl = ENDPOINT_URL
 
         )
-        RAdAttribution.setup(this, configuration)
+        RakutenAdvertisingAttribution.setup(this, configuration)
     }
 }

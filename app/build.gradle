@@ -117,5 +117,5 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
     gitSubmoduleImplementation project(path: ':radattribution-sdk-android')
-    gradleImplementation 'io.github.rakuten-advertising-developers:attribution-sdk:0.0.3'
+    gradleImplementation 'io.rakutenadvertising:attribution:0.0.1'
 }
