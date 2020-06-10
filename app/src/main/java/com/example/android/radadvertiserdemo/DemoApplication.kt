@@ -1,6 +1,7 @@
 package com.example.android.radadvertiserdemo
 
 import android.app.Application
+import com.google.firebase.iid.FirebaseInstanceId
 import com.rakuten.attribution.sdk.Configuration
 import com.rakuten.attribution.sdk.RakutenAdvertisingAttribution
 import com.rakutenadvertising.radadvertiserdemo.BuildConfig
@@ -21,8 +22,8 @@ class DemoApplication : Application() {
                 appVersion = BuildConfig.VERSION_NAME,
                 privateKey = secretKey,
                 isManualAppLaunch = false,
-                endpointUrl = ENDPOINT_URL
-
+                endpointUrl = ENDPOINT_URL,
+                deviceId = FirebaseInstanceId.getInstance().id
         )
         RakutenAdvertisingAttribution.setup(this, configuration)
     }
