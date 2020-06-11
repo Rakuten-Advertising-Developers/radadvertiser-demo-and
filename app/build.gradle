@@ -83,7 +83,7 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:1.2.4"
 
     // Core with Ktx
-    implementation "androidx.core:core-ktx:$version_core"
+    implementation "androidx.core:core-ktx:1.3.0"
 
     // Moshi
     implementation "com.squareup.moshi:moshi:$version_moshi"
@@ -107,7 +107,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
 
     //Firebase
-    implementation 'com.google.firebase:firebase-analytics:17.4.2'
+    implementation 'com.google.firebase:firebase-analytics:17.4.3'
     implementation 'com.google.firebase:firebase-firestore-ktx:21.4.3'
     implementation 'com.google.firebase:firebase-auth:19.3.1'
 
@@ -117,5 +117,5 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
     gitSubmoduleImplementation project(path: ':radattribution-sdk-android')
-    gradleImplementation 'io.rakutenadvertising:attribution:0.0.1'
+    gradleImplementation 'io.rakutenadvertising:attribution:0.0.2'
 }
