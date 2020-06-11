@@ -15,5 +15,6 @@
  *
  */
 
-include ':app', ':radattribution-sdk-android'
-project(':radattribution-sdk-android').projectDir = new File('radattribution-sdk-android/radattribution-sdk-android')
+include ':app', ':radattribution-sdk-android-submodule', ':radattribution-sdk-android-local'
+project(':radattribution-sdk-android-submodule').projectDir = new File('radattribution-sdk-android/radattribution-sdk-android')
+project(':radattribution-sdk-android-local').projectDir = new File("../RADAttributionSDKAndroid/radattribution-sdk-android")

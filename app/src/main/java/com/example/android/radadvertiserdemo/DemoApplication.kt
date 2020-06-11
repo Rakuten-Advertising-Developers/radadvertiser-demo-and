@@ -5,6 +5,8 @@ import com.google.firebase.iid.FirebaseInstanceId
 import com.rakuten.attribution.sdk.Configuration
 import com.rakuten.attribution.sdk.RakutenAdvertisingAttribution
 import com.rakutenadvertising.radadvertiserdemo.BuildConfig
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 const val ENDPOINT_URL = "https://attribution-sdk-endpoint-ff5ckcoswq-uc.a.run.app/v2/"
 
@@ -21,10 +23,12 @@ class DemoApplication : Application() {
                 appId = BuildConfig.APPLICATION_ID,
                 appVersion = BuildConfig.VERSION_NAME,
                 privateKey = secretKey,
-                isManualAppLaunch = false,
+                isManualAppLaunch = true,
                 endpointUrl = ENDPOINT_URL,
                 deviceId = FirebaseInstanceId.getInstance().id
         )
-        RakutenAdvertisingAttribution.setup(this, configuration)
+        GlobalScope.launch {
+            RakutenAdvertisingAttribution.setup(applicationContext, configuration)
+        }
     }
 }
