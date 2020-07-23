@@ -23,7 +23,6 @@ class DemoApplication : Application() {
                 appId = BuildConfig.APPLICATION_ID,
                 appVersion = BuildConfig.VERSION_NAME,
                 privateKey = secretKey,
-                isManualAppLaunch = true,
                 endpointUrl = ENDPOINT_URL,
                 deviceId = FirebaseInstanceId.getInstance().id
         )

@@ -47,7 +47,7 @@ class CartViewModel(val context: Application) : AndroidViewModel(context) {
     }
 
     fun onPurchaseButtonClick() {
-        RakutenAdvertisingAttribution.eventSender.sendEvent(
+        RakutenAdvertisingAttribution.sendEvent(
                 "PURCHASE",
                 contentItems = getContentItems()
         ) {

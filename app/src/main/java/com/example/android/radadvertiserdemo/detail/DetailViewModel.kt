@@ -83,7 +83,7 @@ class DetailViewModel(product: Product, app: Application) : AndroidViewModel(app
         )
         _serveEvent.postValue("Send Event" to action)
 
-        RakutenAdvertisingAttribution.eventSender.sendEvent(
+        RakutenAdvertisingAttribution.sendEvent(
                 name = action,
                 customData = customData,
                 eventData = eventData,

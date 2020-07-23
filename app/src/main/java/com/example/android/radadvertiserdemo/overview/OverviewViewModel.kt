@@ -101,7 +101,7 @@ class OverviewViewModel(application: Application) : AndroidViewModel(application
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
-                        Log.d(MainActivity.tag, "${document.id} => ${document.data}")
+                        Log.d(TAG, "${document.id} => ${document.data}")
                     }
                     val products = result.documents
                             .filter {

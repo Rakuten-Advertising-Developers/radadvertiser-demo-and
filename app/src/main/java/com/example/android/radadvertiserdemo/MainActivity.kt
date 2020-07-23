@@ -19,6 +19,7 @@ package com.example.android.radadvertiserdemo
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -35,7 +36,7 @@ import com.rakutenadvertising.radadvertiserdemo.R
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        val tag = MainActivity::class.java.simpleName
+        val TAG = MainActivity::class.java.simpleName
     }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -67,22 +68,26 @@ class MainActivity : AppCompatActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        Log.d(TAG, "onNewIntent(); intent = $intent")
         handleIntent(intent)
     }
 
     private fun handleIntent(intent: Intent) {
+        Log.d(TAG, "checkIntentData(); intent.scheme = ${intent.scheme}")
+
         if (intent.action == Intent.ACTION_VIEW) {
             when (intent.scheme) {
                 "http", "https", BuildConfig.APP_SCHEME -> showResolveLinkScreen(intent)
                 null -> showError(intent.scheme)
             }
+        } else if (intent.action == Intent.ACTION_MAIN) {
+            showResolveLinkScreen(intent)
         }
     }
 
     private fun showResolveLinkScreen(intent: Intent) {
-
         val args = Bundle()
-        args.putString(LINK_PARAM, intent.data.toString())
+        args.putString(LINK_PARAM, intent.data?.toString() ?: "")
         findNavController(R.id.nav_host_fragment)
                 .navigate(R.id.resolve_link, args)
     }

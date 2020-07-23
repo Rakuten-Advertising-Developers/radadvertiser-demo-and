@@ -39,7 +39,7 @@ class ResolveLinksFragment : Fragment() {
     private fun resolveLink(link: String) {
         displayAction(action = "Resolve Link", data = link)
 
-        RakutenAdvertisingAttribution.linkResolver.resolve(link) {
+        RakutenAdvertisingAttribution.resolve(link) {
             when (it) {
                 is Result.Success -> {
                     displayAction(action = "Server response", data = it.data.toString())
