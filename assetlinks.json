@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.rakutenadvertising.demo",
+    "sha256_cert_fingerprints":
+    ["FF:5F:E0:B0:87:17:72:51:F7:4F:BD:6F:41:30:A2:19:BD:5F:0E:20:D2:78:2C:E4:93:FC:A6:32:58:3C:A7:55"]
+  }
+}]
