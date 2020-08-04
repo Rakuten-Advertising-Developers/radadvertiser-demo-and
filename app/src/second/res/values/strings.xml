@@ -17,4 +17,5 @@
 
 <resources>
     <string name="app_name">Advertiser Demo Second</string>
+    <string name="host">dev2-attribution-sdk.web.app</string>
 </resources>
