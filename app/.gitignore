@@ -1,5 +1,5 @@
 /build
-google-services.json
+src/first/google-services.json
 /src/main/assets/private_key
 /src/main/assets/firebase_credentials
 /release

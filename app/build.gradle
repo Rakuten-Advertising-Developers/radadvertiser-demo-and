@@ -36,11 +36,11 @@ android {
         enabled = true
     }
     defaultConfig {
-        applicationId "io.rakutenadvertising.radadverrtiser"
+        applicationId "io.rakutenadvertising"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 5
-        versionName "1.0.4"
+        versionCode 6
+        versionName "1.0.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -55,11 +55,19 @@ android {
         }
     }
 
-    flavorDimensions "sdkSource"
+    flavorDimensions "advertiser", "sdkSource"
     productFlavors {
-        local {}
-        gitSubmodule {}
-        gradle {}
+        local { dimension "sdkSource" }
+        gitSubmodule { dimension "sdkSource" }
+        gradle { dimension "sdkSource" }
+        first {
+            dimension "advertiser"
+            applicationIdSuffix ".radadverrtiser"
+        }
+        second {
+            dimension "advertiser"
+            applicationIdSuffix ".radadverrtiser2"
+        }
     }
     androidExtensions {
         experimental = true
