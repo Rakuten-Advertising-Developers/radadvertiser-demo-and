@@ -23,6 +23,14 @@ apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('/Users/ts-pavlo.shmyhol/Desktop/demo_app_keystore')
+            keyAlias 'key0'
+            storePassword '7Y3EGPqb?Lv!'
+            keyPassword '7Y3EGPqb?Lv!'
+        }
+    }
     compileSdkVersion 29
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

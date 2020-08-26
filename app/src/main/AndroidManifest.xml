@@ -35,6 +35,22 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/host"
+                    android:pathPattern="@string/path_pattern"
+                    android:scheme="http" />
+
+                <data
+                    android:host="@string/host"
+                    android:pathPattern="@string/path_pattern"
+                    android:scheme="https" />
+            </intent-filter>
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -53,6 +69,7 @@
 
                 <data
                     android:host="@string/host"
+                    android:pathPattern="@string/path_pattern"
                     android:scheme="http" />
             </intent-filter>
             <intent-filter>
@@ -63,6 +80,7 @@
 
                 <data
                     android:host="@string/host"
+                    android:pathPattern="@string/path_pattern"
                     android:scheme="https" />
             </intent-filter>
         </activity>

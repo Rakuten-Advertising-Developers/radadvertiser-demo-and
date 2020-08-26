@@ -17,5 +17,6 @@
 
 <resources>
     <string name="app_name">Advertiser Demo Second</string>
-    <string name="host">dev2-attribution-sdk.web.app</string>
+    <string name="host">click.linksynergy.com</string>
+    <string name="path_pattern">/.*45984/.*</string>
 </resources>

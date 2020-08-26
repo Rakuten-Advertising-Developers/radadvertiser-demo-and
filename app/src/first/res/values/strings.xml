@@ -17,5 +17,6 @@
 
 <resources>
     <string name="app_name">Advertiser Demo First</string>
-    <string name="host">dev1-attribution-sdk.web.app</string>
+    <string name="host">click.linksynergy.com</string>
+    <string name="path_pattern">/.*44066/.*</string>
 </resources>
