@@ -17,6 +17,9 @@
 
 <resources>
     <string name="app_name">Advertiser Demo First</string>
-    <string name="host">click.linksynergy.com</string>
+    <string name="linksynergy_host">click.linksynergy.com</string>
+    <string name="affiliate_host">m1affiliate.rakutenadvertising.io</string>
+    <string name="demo_host">demo1.rakutenadvertising.io</string>
+    <string name="rakutenadvertising_host">click.rakutenadvertising.io</string>
     <string name="path_pattern">/.*44066/.*</string>
 </resources>
