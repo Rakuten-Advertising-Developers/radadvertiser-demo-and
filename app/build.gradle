@@ -23,14 +23,6 @@ apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    signingConfigs {
-        release {
-            storeFile file('/Users/ts-pavlo.shmyhol/Desktop/demo_app_keystore')
-            keyAlias 'key0'
-            storePassword '7Y3EGPqb?Lv!'
-            keyPassword '7Y3EGPqb?Lv!'
-        }
-    }
     compileSdkVersion 29
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -47,8 +39,8 @@ android {
         applicationId "io.rakutenadvertising"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 9
-        versionName "1.0.8"
+        versionCode 11
+        versionName "1.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -97,10 +89,10 @@ dependencies {
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    implementation "androidx.fragment:fragment-ktx:1.2.4"
+    implementation "androidx.fragment:fragment-ktx:1.2.5"
 
     // Core with Ktx
-    implementation "androidx.core:core-ktx:1.3.0"
+    implementation "androidx.core:core-ktx:1.3.1"
 
     // Moshi
     implementation "com.squareup.moshi:moshi:$version_moshi"
@@ -124,9 +116,9 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
 
     //Firebase
-    implementation 'com.google.firebase:firebase-analytics:17.4.3'
-    implementation 'com.google.firebase:firebase-firestore-ktx:21.4.3'
-    implementation 'com.google.firebase:firebase-auth:19.3.1'
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+    implementation 'com.google.firebase:firebase-firestore-ktx:21.6.0'
+    implementation 'com.google.firebase:firebase-auth:19.4.0'
 
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -137,5 +129,5 @@ dependencies {
 
     localImplementation project(':radattribution-sdk-android-local')
     gitSubmoduleImplementation project(':radattribution-sdk-android-submodule')
-    gradleImplementation 'io.rakutenadvertising:attribution:0.0.2'
+    gradleImplementation 'io.rakutenadvertising:attribution:1.0.0'
 }

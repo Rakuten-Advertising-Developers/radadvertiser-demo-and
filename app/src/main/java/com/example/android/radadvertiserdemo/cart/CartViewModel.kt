@@ -23,10 +23,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.android.radadvertiserdemo.DemoApplication
 import com.example.android.radadvertiserdemo.network.Product
 import com.rakuten.attribution.sdk.ContentItem
+import com.rakuten.attribution.sdk.EventData
 import com.rakuten.attribution.sdk.RakutenAdvertisingAttribution
 import com.rakuten.attribution.sdk.Result
+import com.rakutenadvertising.radadvertiserdemo.R
 
 /**
  * The [ViewModel] that is attached to the [CartFragment].
@@ -47,8 +50,23 @@ class CartViewModel(val context: Application) : AndroidViewModel(context) {
     }
 
     fun onPurchaseButtonClick() {
+        val action = getApplication<DemoApplication>().getString(R.string.add_to_cart_event)
+
+        val eventData = EventData(
+                transactionId = "112233",
+                searchQuery = "shoe products",
+                currency = "USD",
+                revenue = 0.0,
+                shipping = 0.0,
+                tax = 0.8,
+                coupon = "coupon_test_code",
+                affiliation = "test affilation code",
+                description = action
+        )
+
         RakutenAdvertisingAttribution.sendEvent(
                 "PURCHASE",
+                eventData = eventData,
                 contentItems = getContentItems()
         ) {
             val text = when (it) {
