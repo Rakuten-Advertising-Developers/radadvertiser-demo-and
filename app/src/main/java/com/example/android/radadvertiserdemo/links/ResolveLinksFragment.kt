@@ -1,5 +1,6 @@
 package com.example.android.radadvertiserdemo.links
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.rakutenadvertising.radadvertiserdemo.R
 class ResolveLinksFragment : Fragment() {
     companion object {
         const val LINK_PARAM = "link_param"
+        val EXCLUDED_DOMAINS = setOf("example.com", "excluded.com")
     }
 
     private var link: String = ""
@@ -39,16 +41,23 @@ class ResolveLinksFragment : Fragment() {
     private fun resolveLink(link: String) {
         displayAction(action = "Resolve Link", data = link)
 
-        RakutenAdvertisingAttribution.resolve(link) {
-            when (it) {
-                is Result.Success -> {
-                    displayAction(action = "Server response", data = it.data.toString())
-                }
-                is Result.Error -> {
-                    displayAction(action = "Server error", data = it.message)
+        if (!shouldIgnoreLinkResolver(link)) {
+            RakutenAdvertisingAttribution.resolve(link) {
+                when (it) {
+                    is Result.Success -> {
+                        displayAction(action = "Server response", data = it.data.toString())
+                    }
+                    is Result.Error -> {
+                        displayAction(action = "Server error", data = it.message)
+                    }
                 }
             }
         }
+    }
+
+    private fun shouldIgnoreLinkResolver(link: String): Boolean {
+        val host = Uri.parse(link).host ?: false
+        return EXCLUDED_DOMAINS.contains(host)
     }
 
     private fun displayAction(action: String, data: String) {
