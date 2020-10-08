@@ -9,9 +9,9 @@ import com.rakutenadvertising.radadvertiserdemo.BuildConfig
 
 class DemoApplication : Application() {
     private val endpoint = if (BuildConfig.DEBUG) {
-        "https://api.rakutenadvertising.io/v2/"
+        "https://api.staging.rakutenadvertising.io/v2/"
     } else {
-        "https://api.staging.rakutenadvertising.io/v2"
+        "https://api.rakutenadvertising.io/v2/"
     }
 
     override fun onCreate() {
