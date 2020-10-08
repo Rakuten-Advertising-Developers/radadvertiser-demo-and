@@ -36,11 +36,11 @@ android {
         enabled = true
     }
     defaultConfig {
-        applicationId "io.rakutenadvertising.radadverrtiser"
+        applicationId "io.rakutenadvertising"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 5
-        versionName "1.0.4"
+        versionCode 11
+        versionName "1.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -55,11 +55,19 @@ android {
         }
     }
 
-    flavorDimensions "sdkSource"
+    flavorDimensions "advertiser", "sdkSource"
     productFlavors {
-        local {}
-        gitSubmodule {}
-        gradle {}
+        local { dimension "sdkSource" }
+        gitSubmodule { dimension "sdkSource" }
+        gradle { dimension "sdkSource" }
+        first {
+            dimension "advertiser"
+            applicationIdSuffix ".radadverrtiser"
+        }
+        second {
+            dimension "advertiser"
+            applicationIdSuffix ".radadverrtiser2"
+        }
     }
     androidExtensions {
         experimental = true
@@ -81,10 +89,10 @@ dependencies {
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    implementation "androidx.fragment:fragment-ktx:1.2.4"
+    implementation "androidx.fragment:fragment-ktx:1.2.5"
 
     // Core with Ktx
-    implementation "androidx.core:core-ktx:1.3.0"
+    implementation "androidx.core:core-ktx:1.3.1"
 
     // Moshi
     implementation "com.squareup.moshi:moshi:$version_moshi"
@@ -108,9 +116,9 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
 
     //Firebase
-    implementation 'com.google.firebase:firebase-analytics:17.4.3'
-    implementation 'com.google.firebase:firebase-firestore-ktx:21.4.3'
-    implementation 'com.google.firebase:firebase-auth:19.3.1'
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+    implementation 'com.google.firebase:firebase-firestore-ktx:21.6.0'
+    implementation 'com.google.firebase:firebase-auth:19.4.0'
 
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -121,5 +129,5 @@ dependencies {
 
     localImplementation project(':radattribution-sdk-android-local')
     gitSubmoduleImplementation project(':radattribution-sdk-android-submodule')
-    gradleImplementation 'io.rakutenadvertising:attribution:0.0.2'
+    gradleImplementation 'io.rakutenadvertising:attribution:1.0.0'
 }
