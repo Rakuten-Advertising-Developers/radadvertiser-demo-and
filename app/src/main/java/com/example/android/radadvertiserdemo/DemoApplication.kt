@@ -26,8 +26,7 @@ class DemoApplication : Application() {
                 appId = BuildConfig.APPLICATION_ID,
                 appVersion = BuildConfig.VERSION_NAME,
                 privateKey = secretKey,
-                endpointUrl = endpoint,
-                deviceId = ANDROID_ID
+                endpointUrl = endpoint
         )
         RakutenAdvertisingAttribution.setup(applicationContext, configuration)
     }

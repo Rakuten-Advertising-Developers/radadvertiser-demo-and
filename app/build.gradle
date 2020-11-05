@@ -129,5 +129,5 @@ dependencies {
 
     localImplementation project(':radattribution-sdk-android-local')
     gitSubmoduleImplementation project(':radattribution-sdk-android-submodule')
-    gradleImplementation 'io.rakutenadvertising:attribution:1.0.0'
+    gradleImplementation 'io.rakutenadvertising:attribution:1.0.1'
 }
