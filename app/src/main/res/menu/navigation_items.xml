@@ -8,4 +8,8 @@
         android:id="@+id/cart_fragment_dest"
         android:icon="@android:drawable/ic_menu_delete"
         android:title="@string/cart" />
+    <item
+        android:id="@+id/web_view_dest"
+        android:icon="@android:drawable/ic_menu_crop"
+        android:title="@string/web_view" />
 </menu>

@@ -9,4 +9,4 @@
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
-    tools:context=".MainActivity"/>
+    tools:context="com.example.android.radadvertiserdemo.MainActivity"/>
